@@ -2,6 +2,7 @@ mod monkey;
 
 use std::fs;
 use std::process::exit;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use clap::Parser;
 
@@ -40,10 +41,12 @@ fn main() {
     // let character_limit: u32 = 191727;
     let character_limit = 3;
     let mut monkey = Monkey::new(character_limit as u64);
+    let start_time = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
     loop {
         let guess = monkey.smack_typewriter();
         if check_str(hasher, &guess, &args.input_md5sum) {
-            println!("Found match! Took {} monkies", monkey.guess_count);
+            let elapsed_time = SystemTime::now().duration_since(UNIX_EPOCH).unwrap() - start_time;
+            println!("Found match! Took {} monkies approximately {} milliseconds", monkey.guess_count, elapsed_time.as_millis());
             fs::write(&output_file, guess).expect(
                 &format!("Unable to save ouput to {}! How dare you", &output_file)
             );
