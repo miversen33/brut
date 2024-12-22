@@ -10,7 +10,9 @@ Because it is funny
 
 ## How do I build this?
 
-Download the source
+First you will need to install rust for your operating system: https://www.rust-lang.org/tools/install
+
+Then, download the source
 ```bash
 $ git clone https://github.com/miversen33/brut
 ```
@@ -26,7 +28,7 @@ $ cargo build --release
 After you've successfully [built](#how-do-i-build-this) brut, you will need an [md5sum summed](https://en.wikipedia.org/wiki/Md5sum) hash that you want Brut to generate the source to. As an example (keeping with the Hamlet theme)
 
 ```bash
-$ cargo run -- fb206c47affa38f6c58616fb912e280b # this hash is the md5sum of hamlet, found here: https://gist.githubusercontent.com/provpup/2fc41686eab7400b796b/raw/b575bd01a58494dfddc1d6429ef0167e709abf9b/hamlet.txt
+$ target/release/brut fb206c47affa38f6c58616fb912e280b # this hash is the md5sum of hamlet, found here: https://gist.githubusercontent.com/provpup/2fc41686eab7400b796b/raw/b575bd01a58494dfddc1d6429ef0167e709abf9b/hamlet.txt
 ```
 
 NOTE: As the theorem states, this will likely never complete.
@@ -34,9 +36,7 @@ NOTE: As the theorem states, this will likely never complete.
 That said, Brut is a funny little guy. You can use him to crack other md5sums in the stupidest way possible (completely randomly guessing)
 
 ```bash
-$ cargo run -- $(echo -n "ab" | md5sum | sed -E 's/[- ]+$//g')
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `target/debug/brut 187ef4436122d1cc2f40dc2b92f0eba0`
+$ target/release/brut -c 2 $(echo -n "ab" | md5sum | sed -E 's/[- ]+$//g')
 Attempting to find input that matches 187ef4436122d1cc2f40dc2b92f0eba0
-Found match! Took 12902 monkies approximately 32 milliseconds
+Found match! Took 8829 monkies approximately 1 milliseconds
 ```
