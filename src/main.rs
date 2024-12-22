@@ -1,4 +1,4 @@
-mod monkey;
+mod troop;
 
 use std::fs;
 use std::process::exit;
@@ -9,7 +9,7 @@ use clap::Parser;
 use crypto::md5::Md5;
 use crypto::digest::Digest;
 
-use monkey::Monkey;
+use troop::Monkey;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
