@@ -21,7 +21,12 @@ struct Args {
 
     /// The file to write to
     #[arg(short, long, default_value = "output.txt")]
-    output: String
+    output: String,
+
+    /// An optional limit to how many characters a monkey can generate
+    /// defaults to 191726 (the number of characters in hamlet)
+    #[arg(short, long, default_value_t = 191727)]
+    character_limit: u64
 }
 
 fn check_str(mut hasher: Md5, guess: &str, comp_sum: &str) -> bool {
@@ -38,9 +43,7 @@ fn main() {
 
     // There are 191726 in Hamlet. To give the monkey a chance
     // they will only be required to guess up to this many characters
-    // let character_limit: u32 = 191727;
-    let character_limit = 3;
-    let mut monkey = Monkey::new(character_limit as u64);
+    let mut monkey = Monkey::new(args.character_limit);
     let start_time = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
     loop {
         let guess = monkey.smack_typewriter();
